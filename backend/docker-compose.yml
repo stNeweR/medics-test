@@ -1,0 +1,21 @@
+version: '3.2'
+services:
+  nginx:
+    build:
+      dockerfile: docker/nginx.docker
+    volumes:
+    - ./:/var/www
+    ports:
+    - "8080:80"
+    links:
+      - php-fpm
+
+  php-fpm:
+    build:
+      context: ./
+      dockerfile: docker/php-fpm.docker
+    volumes:
+      - ./:/var/www
+    environment:
+      - "DB_PORT=3306"
+      - "DB_HOST=mysql"
