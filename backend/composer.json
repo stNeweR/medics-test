@@ -11,5 +11,7 @@
             "email": "shyguy096com@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+      "ext-pdo": "*"
+    }
 }

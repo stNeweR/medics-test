@@ -1,9 +1,9 @@
 <?php
 
 use App\Router\Route;
-use App\Controllers\UserController;
+use App\Controllers\PeopleController;
 
 return [
-    Route::get('', [UserController::class, 'index']),
-    Route::get('/how', [UserController::class, 'show']),
+    Route::get('/peoples', [PeopleController::class, 'index']),
+    Route::get('/peoples/show', [PeopleController::class, 'show']),
 ];

@@ -5,6 +5,7 @@ namespace App\Database;
 use App\Config\Config;
 use PDO;
 use PDOException;
+use PDOStatement;
 
 class Database
 {
@@ -32,5 +33,26 @@ class Database
         } catch (PDOException $e) {
             throw new PDOException($e->getMessage());
         }
+    }
+
+    public function get(string $table, array $params = [])
+    {
+        $sql = "SELECT * FROM $table";
+
+        if (!empty($params)) {
+            $whereClaus = [];
+            $binds = [];
+
+            foreach ($params as $key => $value) {
+                $whereClaus[] = "$key = ?";
+                $binds[] = $value;
+            }
+
+            $sql .= " WHERE " . implode(" AND ", $whereClaus);
+        }
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($binds);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
