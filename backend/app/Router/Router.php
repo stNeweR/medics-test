@@ -63,6 +63,6 @@ class Router
      */
     public function getRoutes(): array
     {
-        return require_once(__DIR__.'/../../routes.php');
+        return require_once(__DIR__.'/../../config/routes.php');
     }
 }
