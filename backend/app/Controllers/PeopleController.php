@@ -54,6 +54,36 @@ class PeopleController extends Controller
         }
     }
 
+    public function update()
+    {
+        if (empty($_GET['id'])) {
+            return [
+                'message' => 'Отправьте id пользователя в get'
+            ];
+        }
+
+        $data = $this->request->validate([
+            'first_name' => ['required', 'min:3', 'max:50'],
+            'second_name' => ['required', 'min:3', 'max:50'],
+            'last_name' => ['required', 'min:3', 'max:50'],
+        ]);
+
+        if (isset($data['errors'])) {
+            return [
+                'message' => 'Валидация не пройдена',
+                'errors' => $data['errors']
+            ];
+        }
+
+        $result = $this->db->update('peoples', $_GET['id'],  $data);
+
+        if(isset($result['error'])) {
+            return ['error' => $result['error']];
+        } else {
+            return $result;
+        }
+    }
+
     public function delete()
     {
         if (empty($_GET['id'])) {

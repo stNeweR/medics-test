@@ -75,7 +75,34 @@ class Database
         }
     }
 
-    public function delete(string $table, $id)
+    public function update(string $table, int $id, array $data)
+    {
+        $set = [];
+        $params = [];
+
+        foreach ($data as $key => $value) {
+            $set[] = "$key = ?";
+            $params[] = $value;
+        }
+
+        $sql = "UPDATE $table SET " . implode(', ', $set) . " WHERE id = ?";
+        $params[] = $id;
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute($params);
+
+            if ($stmt->rowCount() > 0) {
+                return [ 'message' => 'Пользователь успешно обновлен' ];
+            } else {
+                return [ 'error' => 'Нет пользователя с таким id' ];
+            }
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function delete(string $table, int $id)
     {
         $sql = "DELETE FROM $table WHERE id = :id";
 
