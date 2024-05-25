@@ -49,3 +49,32 @@ VALUES
     ('Michael', 'Johnson', 'Johnson'),
     ('Sarah', 'Lee', 'Lee'),
     ('David', 'Brown', 'Brown');
+
+INSERT INTO organizations (name, address) VALUES
+    ('Acme Corp', '123 Main St, Anytown USA'),
+    ('Globex Inc', '456 Oak Rd, Somewhere Else'),
+    ('Stark Industries', '789 Maple Ave, Elsewhere');
+
+INSERT INTO departments (name, organization_id) VALUES
+    ('Sales', 1),
+    ('Marketing', 1),
+    ('IT', 1),
+    ('HR', 2),
+    ('Engineering', 2),
+    ('R&D', 3);
+
+INSERT INTO people_phones (people_id, phone_number) VALUES
+    (1, '555-1234'),
+    (1, '555-5678'),
+    (2, '555-9012'),
+    (3, '555-3456'),
+    (4, '555-7890'),
+    (5, '555-2222');
+
+INSERT INTO department_phones (department_id, phone_number) VALUES
+    (1, '555-1111'),
+    (2, '555-2222'),
+    (3, '555-3333'),
+    (4, '555-4444'),
+    (5, '555-5555'),
+    (6, '555-6666');

@@ -10,9 +10,12 @@ class PeopleController extends Controller
     {
         $peoples = $this->db->get('peoples');
 
+        $result = $this->db->getPhones('peoples', 'people_phones', $peoples, 'people_id');
+
         return [
-            'data' => $peoples,
+            'peoples' => $result
         ];
+
     }
 
     public function show()
@@ -24,9 +27,10 @@ class PeopleController extends Controller
         }
 
         $peoples = $this->db->get('peoples', $_GET);
+        $result = $this->db->getPhones('peoples', 'people_phones', $peoples, 'people_id');
 
         return [
-            'peoples' => $peoples
+            'peoples' => $result
         ];
     }
 

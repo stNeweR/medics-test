@@ -3,8 +3,6 @@
 namespace App\Database;
 
 use App\Config\Config;
-use MongoDB\Driver\Exception\Exception;
-use MongoDB\Driver\Exception\ExecutionTimeoutException;
 use PDO;
 use PDOException;
 use PDOStatement;
@@ -54,10 +52,25 @@ class Database
         } else {
             $binds = [];
         }
+
         $stmt = $this->db->prepare($sql);
         $stmt->execute($binds);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getPhones(string $table, string $phone_table, array $data, string $id_name)
+    {
+        $result = [];
+
+        foreach ($data as $value) {
+            $phones = $this->get($phone_table, [$id_name => $value['id']]);
+            $result[] = array_merge($value, [
+                'phones' => array_column($phones, 'phone_number')
+            ]);
+        }
+
+        return $result;
     }
 
     public function insert(string $table, array $data)
@@ -69,7 +82,7 @@ class Database
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute(array_values($data));
-            return ['message' => 'Пользователь успешно добавлен'];
+            return ['message' => 'Данные успешно добавлен'];
         } catch (\Exception $e) {
             return [ 'error' => $e->getMessage() ];
         }
@@ -93,9 +106,9 @@ class Database
             $stmt->execute($params);
 
             if ($stmt->rowCount() > 0) {
-                return [ 'message' => 'Пользователь успешно обновлен' ];
+                return [ 'message' => 'Данные успешно обновлен' ];
             } else {
-                return [ 'error' => 'Нет пользователя с таким id' ];
+                return [ 'error' => 'Нет значения таким id' ];
             }
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -111,9 +124,9 @@ class Database
             $stmt->bindValue(':id', $id);
             $stmt->execute();
             if ($stmt->rowCount() > 0) {
-                return [ 'message' => 'Пользователь удален' ];
+                return [ 'message' => 'Данные удалены' ];
             } else {
-                return [ 'error' => 'Нет пользователя с таким id' ];
+                return [ 'error' => 'Нет значения таким id' ];
             }
         } catch (\Exception $e) {
             return [ 'error' => $e->getMessage() ];
