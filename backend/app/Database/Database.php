@@ -3,6 +3,8 @@
 namespace App\Database;
 
 use App\Config\Config;
+use MongoDB\Driver\Exception\Exception;
+use MongoDB\Driver\Exception\ExecutionTimeoutException;
 use PDO;
 use PDOException;
 use PDOStatement;
@@ -49,10 +51,27 @@ class Database
             }
 
             $sql .= " WHERE " . implode(" AND ", $whereClaus);
+        } else {
+            $binds = [];
         }
         $stmt = $this->db->prepare($sql);
         $stmt->execute($binds);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function insert(string $table, array $data)
+    {
+        $columns = implode(', ', array_keys($data));
+        $values = implode(', ', array_fill(0, count($data), '?'));
+        $sql = "INSERT INTO $table ($columns) VALUES ($values)";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(array_values($data));
+            return ['message' => 'Пользователь успешно добавлен'];
+        } catch (\Exception $e) {
+            return [ 'error' => $e->getMessage() ];
+        }
     }
 }

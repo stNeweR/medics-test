@@ -1,7 +1,7 @@
 <?php 
 
 namespace App\Controllers;
-use App\Database\Database;
+
 use App\Controllers\Controller;
 
 class PeopleController extends Controller
@@ -28,5 +28,29 @@ class PeopleController extends Controller
         return [
             'peoples' => $peoples
         ];
+    }
+
+    public function store()
+    {
+        $data = $this->request->validate([
+            'first_name' => ['required', 'min:3', 'max:50'],
+            'second_name' => ['required', 'min:3', 'max:50'],
+            'last_name' => ['required', 'min:3', 'max:50'],
+        ]);
+
+        if (isset($data['errors'])) {
+            return [
+                'message' => 'Валидация не пройдена',
+                'errors' => $data['errors']
+            ];
+        }
+
+        $result = $this->db->insert('peoples', $data);
+
+        if(isset($result['error'])) {
+            return ['error' => $result['error']];
+        } else {
+            return $result;
+        }
     }
 }
