@@ -53,4 +53,21 @@ class PeopleController extends Controller
             return $result;
         }
     }
+
+    public function delete()
+    {
+        if (empty($_GET['id'])) {
+            return [
+                'message' => 'Отправьте id пользователя в get'
+            ];
+        }
+
+        $result = $this->db->delete('peoples', $_GET['id']);
+
+        if(isset($result['error'])) {
+            return ['error' => $result['error']];
+        } else {
+            return $result;
+        }
+    }
 }

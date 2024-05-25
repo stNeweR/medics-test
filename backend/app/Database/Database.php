@@ -74,4 +74,22 @@ class Database
             return [ 'error' => $e->getMessage() ];
         }
     }
+
+    public function delete(string $table, $id)
+    {
+        $sql = "DELETE FROM $table WHERE id = :id";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                return [ 'message' => 'Пользователь удален' ];
+            } else {
+                return [ 'error' => 'Нет пользователя с таким id' ];
+            }
+        } catch (\Exception $e) {
+            return [ 'error' => $e->getMessage() ];
+        }
+    }
 }
