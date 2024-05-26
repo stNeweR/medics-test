@@ -2,6 +2,8 @@
 
 namespace Kernel\Http;
 
+use App\Database\Database;
+
 class Validator
 {
 
@@ -23,7 +25,7 @@ class Validator
     {
         foreach ($rules as $rule) {
             if (!$this->validateRule($field, $rule)) {
-                $this->errors[$field] = "The $field field is invalid.";
+//                $this->errors[$field] = "The $field field is invalid.";
                 return;
             }
         }
@@ -37,12 +39,50 @@ class Validator
 
         switch ($ruleName) {
             case 'required':
-                return !empty($this->data[$field]);
+                if (empty($this->data[$field])) {
+                    $this->errors[$field] = "Вы не задали поле: $field";
+                    return false;
+                }
+                return true;
             case 'min':
-                return strlen($this->data[$field]) >= (int)$ruleParam;
+                if (strlen($this->data[$field]) >= (int)$ruleParam) {
+                    $this->errors[$field] = "Поле $field должно быть длиннее $ruleParam";
+                    return false;
+                }
+                return true;
             case 'max':
+                if (strlen($this->data[$field]) <= (int)$ruleParam) {
+                    $this->errors[$field] = "Поле $field должно быть короче $ruleParam";
+                }
                 return strlen($this->data[$field]) <= (int)$ruleParam;
+            case 'personPhone':
+                $pattern = "/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/";
+                if (!preg_match($pattern, $this->data[$field])) {
+                    $this->errors[$field] = "Телефон должен быть вот такого формата +7 (777) 777-77-77";
+                    return false;
+                }
+                return true;
+            case 'departmentPhone':
+                $pattern = "/^\d{3}-\d{2}-\d{2}$/";
+                if (!preg_match($pattern, $this->data[$field])) {
+                    $this->errors[$field] = "Телефон должен быть вот такого формата 777-77-77";
+                    return false;
+                }
+                return true;
+            case 'unique':
+                $value = $this->data[$field];
+                $table = $ruleParam;
+                $db = new Database();
+                $phones = $db->get($table, [$field =>  $value]);
+
+                if (empty($phones)) {
+                    return true;
+                }
+
+                $this->errors[$field] = "Field `$field` is not unique";
+                return false;
             default:
                 return true;
         }
-    }}
+    }
+}

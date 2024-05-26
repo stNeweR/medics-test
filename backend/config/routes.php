@@ -2,6 +2,7 @@
 
 use App\Router\Route;
 use App\Controllers\PeopleController;
+use App\Controllers\PeoplePhoneController;
 
 return [
     Route::get('/peoples', [PeopleController::class, 'index']),
@@ -9,4 +10,5 @@ return [
     Route::post('/peoples/store', [PeopleController::class, 'store']),
     Route::post('/peoples/delete', [PeopleController::class, 'delete']),
     Route::post('/peoples/update', [PeopleController::class, 'update']),
+    Route::post('/peoples/phones', [PeoplePhoneController::class, 'store']),
 ];

@@ -1,7 +1,7 @@
 CREATE TABLE peoples (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
-    sur_name VARCHAR(50) NOT NULL,
+    second_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -42,7 +42,7 @@ CREATE TABLE department_phones (
     FOREIGN KEY (department_id) REFERENCES departments(id)
 );
 
-INSERT INTO peoples (first_name, sur_name, last_name)
+INSERT INTO peoples (first_name, second_name, last_name)
 VALUES
     ('John', 'Doe', 'Doe'),
     ('Jane', 'Smith', 'Smith'),
