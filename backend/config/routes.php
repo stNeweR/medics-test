@@ -11,4 +11,5 @@ return [
     Route::post('/peoples/delete', [PeopleController::class, 'delete']),
     Route::post('/peoples/update', [PeopleController::class, 'update']),
     Route::post('/peoples/phones', [PeoplePhoneController::class, 'store']),
+    Route::post('/peoples/phones/delete', [PeoplePhoneController::class, 'delete']),
 ];

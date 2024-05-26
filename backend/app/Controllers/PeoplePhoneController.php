@@ -37,4 +37,19 @@ class PeoplePhoneController extends Controller
             return $result;
         }
     }
+
+    public function delete()
+    {
+        if (empty($_GET)) {
+            return [ 'message' => 'Отправьте параметры для поиска в get' ];
+        }
+
+        $result = $this->db->delete('people_phones', $_GET['id']);
+
+        if(isset($result['error'])) {
+            return ['error' => $result['error']];
+        } else {
+            return $result;
+        }
+    }
 }

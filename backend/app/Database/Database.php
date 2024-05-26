@@ -126,7 +126,7 @@ class Database
             if ($stmt->rowCount() > 0) {
                 return [ 'message' => 'Данные удалены' ];
             } else {
-                return [ 'error' => 'Нет значения таким id' ];
+                return [ 'error' => 'Нет значения c таким id' ];
             }
         } catch (\Exception $e) {
             return [ 'error' => $e->getMessage() ];
