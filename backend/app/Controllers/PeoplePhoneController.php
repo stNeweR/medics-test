@@ -11,6 +11,7 @@ class PeoplePhoneController extends Controller
         $data = $this->request->validate([
             'phone_number' => ['required', 'personPhone', 'unique:people_phones'],
         ]);
+
         if (isset($data['errors'])) {
             return [
                 'message' => 'Валидация не пройдена',
@@ -18,8 +19,8 @@ class PeoplePhoneController extends Controller
             ];
         }
 
-        if (empty($_GET)) {
-            return [ 'message' => 'Отправьте параметры для поиска в get' ];
+        if (empty($_GET['id'])) {
+            return [ 'message' => 'Отправьте id для поиска через get' ];
         }
 
         $person = $this->db->get('peoples', $_GET);
@@ -40,11 +41,37 @@ class PeoplePhoneController extends Controller
 
     public function delete()
     {
-        if (empty($_GET)) {
-            return [ 'message' => 'Отправьте параметры для поиска в get' ];
+        if (empty($_GET['phone_id'])) {
+            return [ 'message' => 'Отправьте id для поиска через get' ];
         }
 
-        $result = $this->db->delete('people_phones', $_GET['id']);
+        $result = $this->db->delete('people_phones', $_GET['phone_id']);
+
+        if(isset($result['error'])) {
+            return ['error' => $result['error']];
+        } else {
+            return $result;
+        }
+    }
+
+    public function update()
+    {
+        if (empty($_GET['id'])) {
+            return [ 'message' => 'Отправьте id для поиска через get' ];
+        }
+
+        $data = $this->request->validate([
+            'phone_number' => ['required', 'personPhone', 'unique:people_phones'],
+        ]);
+
+        if (isset($data['errors'])) {
+            return [
+                'message' => 'Валидация не пройдена',
+                'errors' => $data['errors']
+            ];
+        }
+
+        $result = $this->db->update('people_phones', $_GET['phone_id'], $data);
 
         if(isset($result['error'])) {
             return ['error' => $result['error']];

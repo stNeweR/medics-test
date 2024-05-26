@@ -80,7 +80,7 @@ class Validator
                     return true;
                 }
 
-                $this->errors[$field] = "Field `$field` is not unique";
+                $this->errors[$field] = "Поле $field не уникальное";
                 return false;
             default:
                 return true;
