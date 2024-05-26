@@ -1,7 +1,5 @@
 <script setup>
 import Header from "@/components/Header.vue";
-
-console.log('hello world!')
 </script>
 
 <template>
