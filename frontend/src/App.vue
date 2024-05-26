@@ -1,6 +1,12 @@
 <script setup>
+import Header from "@/components/Header.vue";
+
+console.log('hello world!')
 </script>
 
 <template>
-  <h1>HALO world!</h1>
+  <Header/>
+  <div class="container">
+    <RouterView/>
+  </div>
 </template>
