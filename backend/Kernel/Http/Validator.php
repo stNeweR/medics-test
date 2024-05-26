@@ -45,16 +45,17 @@ class Validator
                 }
                 return true;
             case 'min':
-                if (strlen($this->data[$field]) >= (int)$ruleParam) {
+                if (strlen($this->data[$field]) < (int)$ruleParam) {
                     $this->errors[$field] = "Поле $field должно быть длиннее $ruleParam";
                     return false;
                 }
                 return true;
             case 'max':
-                if (strlen($this->data[$field]) <= (int)$ruleParam) {
+                if (strlen($this->data[$field]) > (int)$ruleParam) {
                     $this->errors[$field] = "Поле $field должно быть короче $ruleParam";
+                    return false;
                 }
-                return strlen($this->data[$field]) <= (int)$ruleParam;
+                return true;
             case 'personPhone':
                 $pattern = "/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/";
                 if (!preg_match($pattern, $this->data[$field])) {

@@ -96,7 +96,7 @@ class PeopleController extends Controller
             ];
         }
 
-        $result = $this->db->delete('peoples', $_GET['id']);
+        $result = $this->db->cascadeDelete('peoples', $_GET['id'], 'people_id', 'people_phones');
 
         if(isset($result['error'])) {
             return ['error' => $result['error']];

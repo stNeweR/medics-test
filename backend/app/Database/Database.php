@@ -132,4 +132,20 @@ class Database
             return [ 'error' => $e->getMessage() ];
         }
     }
+
+    public function cascadeDelete(string $table, int $id, string $id_name, string $cascade_table)
+    {
+        try {
+            $cascadeValue = $this->get($cascade_table, [$id_name => $id]);
+
+            foreach ($cascadeValue as $value) {
+                $this->delete($cascade_table, $value['id']);
+            }
+
+            $this->delete($table, $id);
+            return [ 'message' => 'Данные усппешно удалены' ];
+        } catch (\Exception $e) {
+            return [ 'error' => $e->getMessage() ];
+        }
+    }
 }
