@@ -2,11 +2,11 @@
   <h1>Добавить пользователя</h1>
   <form @submit.prevent="addPerson" class="flex flex-col w-1/3">
     <label for="last_name">Фамилия:</label>
-    <input type="text" id="last_name" name="last_name" class="border border-black" v-model="last_name">
+    <input type="text" id="last_name" name="last_name" class="border border-gray-400 rounded-md px-3 py-2" v-model="last_name">
     <label for="first_name">Имя:</label>
-    <input type="text" id="first_name" name="first_name" class="border border-black" v-model="first_name">
+    <input type="text" id="first_name" name="first_name" class="border border-gray-400 rounded-md px-3 py-2" v-model="first_name">
     <label for="second_name">Отчество:</label>
-    <input type="text" id="second_name" name="second_name" class="border border-black"  v-model="second_name">
+    <input type="text" id="second_name" name="second_name" class="border border-gray-400 rounded-md px-3 py-2"  v-model="second_name">
     <button>Добавить</button>
   </form>
   <h1>Контакты пользователей</h1>

@@ -71,7 +71,7 @@ class PeoplePhoneController extends Controller
             ];
         }
 
-        $result = $this->db->update('people_phones', $_GET['phone_id'], $data);
+        $result = $this->db->update('people_phones', $_GET['id'], $data);
 
         if(isset($result['error'])) {
             return ['error' => $result['error']];
