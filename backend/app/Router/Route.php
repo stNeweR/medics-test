@@ -15,13 +15,22 @@ class Route
 
     public static function get(string $uri, $action): static
     {
-        // var_dump(new static($uri, 'GET', $action));
         return new static('/api' . $uri, 'GET', $action);
     }
 
     public static function post(string $uri, $action)
     {
         return new static('/api' . $uri, 'POST', $action);
+    }
+
+    public static  function delete(string $uri, $action)
+    {
+        return new static('/api' . $uri, 'DELETE', $action);
+    }
+
+    public static function put(string $uri, $action)
+    {
+        return new static('/api' . $uri, 'PUT', $action);
     }
 
     public function getMethod(): string

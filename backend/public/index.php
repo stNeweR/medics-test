@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__ . '/../vendor/autoload.php');
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');

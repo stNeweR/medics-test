@@ -13,6 +13,7 @@ class PeoplePhoneController extends Controller
         ]);
 
         if (isset($data['errors'])) {
+            http_response_code(400);
             return [
                 'message' => 'Валидация не пройдена',
                 'errors' => $data['errors']
@@ -20,11 +21,13 @@ class PeoplePhoneController extends Controller
         }
 
         if (empty($_GET['id'])) {
+            http_response_code(400);
             return [ 'message' => 'Отправьте id для поиска через get' ];
         }
 
         $person = $this->db->get('peoples', $_GET);
         if (empty($person)) {
+            http_response_code(400);
             return [ 'message' => 'Пользователь с таким id не найден' ];
         }
 
@@ -33,8 +36,10 @@ class PeoplePhoneController extends Controller
         $result = $this->db->insert('people_phones', $data);
 
         if(isset($result['error'])) {
+            http_send_status(500);
             return ['error' => $result['error']];
         } else {
+            http_send_status(200);
             return $result;
         }
     }

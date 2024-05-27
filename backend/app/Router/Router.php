@@ -14,6 +14,8 @@ class Router
     private array $routes = [
         'GET' => [],
         'POST' => [],
+        'DELETE' => [],
+        'PUT' => [],
     ];
 
     public function dispatch(string $uri, string $method)
