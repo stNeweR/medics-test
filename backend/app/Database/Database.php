@@ -65,8 +65,15 @@ class Database
 
         foreach ($data as $value) {
             $phones = $this->get($phone_table, [$id_name => $value['id']]);
+            $phoneDetails = [];
+            foreach ($phones as $phone) {
+                $phoneDetails[] = [
+                    'id' => $phone['id'],
+                    'phone_number' => $phone['phone_number'],
+                ];
+            }
             $result[] = array_merge($value, [
-                'phones' => array_column($phones, 'phone_number')
+                'phones' => $phoneDetails
             ]);
         }
 

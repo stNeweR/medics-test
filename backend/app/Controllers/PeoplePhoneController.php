@@ -41,11 +41,11 @@ class PeoplePhoneController extends Controller
 
     public function delete()
     {
-        if (empty($_GET['phone_id'])) {
+        if (empty($_GET['id'])) {
             return [ 'message' => 'Отправьте id для поиска через get' ];
         }
 
-        $result = $this->db->delete('people_phones', $_GET['phone_id']);
+        $result = $this->db->delete('people_phones', $_GET['id']);
 
         if(isset($result['error'])) {
             return ['error' => $result['error']];
